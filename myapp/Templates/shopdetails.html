@@ -91,7 +91,7 @@
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
-    <header class="header">
+    {% comment %} <header class="header">
         <div class="header__top">
             <div class="container">
                 <div class="row">
@@ -167,9 +167,9 @@
                 <i class="fa fa-bars"></i>
             </div>
         </div>
-    </header>
+    </header> {% endcomment %}
     <!-- Header Section End -->
-
+{% block content %}
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
@@ -229,11 +229,11 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Vegetable’s Package</h2>
+                        <h2>{{pid.name}}</h2>
                         <div class="breadcrumb__option">
                             <a href="{% url 'index' %}">Home</a>
                             <a href="{% url 'index' %}">Vegetables</a>
-                            <span>Vegetable’s Package</span>
+                            <span>{{pid.name}}</span>
                         </div>
                     </div>
                 </div>
@@ -243,17 +243,17 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Product Details Section Begin -->
-    <section class="product-details spad">
+    {% comment %} <section class="product-details spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                src="static/img/product/details/product-details-1.jpg" alt="">
+                                src="{{pid.image.url}}" alt="{{pid.image}}">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="static/img/product/details/product-details-2.jpg"
+                             <img data-imgbigurl="static/img/product/details/product-details-2.jpg"
                                 src="static/img/product/details/thumb-1.jpg" alt="">
                             <img data-imgbigurl="static/img/product/details/product-details-3.jpg"
                                 src="static/img/product/details/thumb-2.jpg" alt="">
@@ -266,7 +266,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
-                        <h3>Vetgetable’s Package</h3>
+                        <h3>{{pid.name}}</h3>
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -275,7 +275,7 @@
                             <i class="fa fa-star-half-o"></i>
                             <span>(18 reviews)</span>
                         </div>
-                        <div class="product__details__price">$50.00</div>
+                        <div class="product__details__price">₹{{pid.price}}</div>
                         <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
                             vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
                             quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
@@ -385,6 +385,36 @@
                 </div>
             </div>
         </div>
+    </section> {% endcomment %}
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                src="{{pid.image.url}}" alt="{{pid.name}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>{{pid.name}}</h3>
+                        <div class="product__details__price">₹{{pid.price}}</div>
+                        <p>{{pid.description | safe }}</p>
+                        <ul>
+                            <li><b>Department:</b> <span>{{pid.Department.name}}</span></li>
+                            <li><b>Color:</b> <span>{{pid.Color.colorname}}</span></li>
+                            <li><b>Size:</b> <span>{{pid.Size.sizename}}</span></li>
+                            <li><b>Availability:</b> <span>In Stock</span></li>
+                        </ul>
+                        {% if pid.id %}
+                        <a href="{% url 'addtocart' id=pid.id %}" class="primary-btn">ADD TO CART</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- Product Details Section End -->
 
@@ -463,7 +493,7 @@
         </div>
     </section>
     <!-- Related Product Section End -->
-
+{% endblock %}
     <!-- Footer Section Begin -->
     <footer class="footer spad">
         <div class="container">

@@ -258,7 +258,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {% comment %} <tr>
                                     <td class="shoping__cart__item">
                                         <img src="static/img/cart/cart-1.jpg" alt="">
                                         <h5>Vegetable’s Package</h5>
@@ -301,29 +301,33 @@
                                     <td class="shoping__cart__item__close">
                                         <span class="icon_close"></span>
                                     </td>
-                                </tr>
+                                </tr> {% endcomment %}
+                                {% for i in cid %}
                                 <tr>
                                     <td class="shoping__cart__item">
-                                        <img src="static/img/cart/cart-3.jpg" alt="">
-                                        <h5>Organic Bananas</h5>
+                                        <img src="{{i.image}}" alt="" style="width: 100px; height: 100px; object-fit: cover;">
+                                        <h5>{{i.name}}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
-                                        $69.00
+                                        ₹{{i.price}}
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
+                                            <div class="">
+                                                <span><a href="{% url 'minuscart' i.id %}">-</a></span>
+                                                <span>{{i.qty}}</span>
+                                                <span><a href="{% url 'pluscart' i.id %}">+</a></span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
+                                    <td class="shoping__cart__total" >
+                                        ₹{{i.total_price}}
                                     </td>
                                     <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
+                                        <a href="{% url 'removecart' i.id %}" class="icon_close"></a>
                                     </td>
                                 </tr>
+                                {% endfor  %}
                             </tbody>
                         </table>
                     </div>
@@ -352,8 +356,8 @@
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Subtotal <span>₹{{total_cart_price}}</span></li>
+                            <li>Total <span>₹{{total_cart_price}}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
